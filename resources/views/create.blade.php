@@ -8,6 +8,7 @@
                 <div class="card-header">Create Antrian Pesanan</div>
                 
                 <div class="card-body">
+                    @include('flash::message')
                     <form action="{{ url('create') }}" method="POST">
                         @csrf
                         <div class="form-group">

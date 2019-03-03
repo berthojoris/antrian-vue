@@ -54,11 +54,13 @@ class OrderController extends Controller
                 OrderDetail::insert($menuForm);
 
                 DB::commit();
+                flash('Order telah dibuat')->success();
                 OrderStatusUpdate::dispatch($save, 'CREATED');
-                return redirect('editstatus');
+                return back();
             } catch (\Exception $e) {
                 DB::rollBack();
-                dd($e);
+                flash('Order gagal dibuat')->error();
+                return back();
             }
         }
 
