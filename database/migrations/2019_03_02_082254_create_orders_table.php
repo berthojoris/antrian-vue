@@ -15,8 +15,10 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid');
             $table->string('table_id');
-            $table->string('status')->default('CREATED');
+            $table->string('table_name');
+            $table->string('status')->default('SEDANG DIPROSES');
             $table->string('user_order');
             $table->timestamps();
         });

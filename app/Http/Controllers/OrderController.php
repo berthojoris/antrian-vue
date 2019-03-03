@@ -3,83 +3,130 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use Faker\Factory;
+use App\OrderDetail;
+use Webpatser\Uuid\Uuid;
 use Illuminate\Http\Request;
+use App\Events\OrderStatusUpdate;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        return Order::orderBy('id', 'desc')->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if($request->isMethod('post')) {
+
+            if(empty(request('menu')) || empty(request('table_id'))) {
+                return redirect('create');
+            }
+
+            DB::beginTransaction();
+
+            $faker = Factory::create();
+            $tableID = request('table_id');
+            $uuid = Uuid::generate()->string;
+
+            try {
+                $save = Order::create([
+                    'table_id' => $tableID,
+                    'uuid' => $uuid,
+                    'table_name' => $faker->name,
+                    'user_order' => $faker->name
+                ]);
+
+                $menuForm = [];
+                foreach(request('menu') as $m) {
+                    array_push($menuForm, [
+                        'uuid' => $uuid,
+                        'table_id' => $tableID,
+                        'menu_name' => $m,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]);
+                }
+
+                OrderDetail::insert($menuForm);
+
+                DB::commit();
+                OrderStatusUpdate::dispatch($save, 'CREATED');
+                return redirect('editstatus');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                dd($e);
+            }
+        }
+
+        return view('create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $faker = Factory::create();
+
+        $save = Order::create([
+            'table_id' => request('table_id'),
+            'table_name' => $faker->name,
+            'user_order' => $faker->name
+        ]);
+
+        OrderStatusUpdate::dispatch($save, 'CREATED');
+
+        return response()->json([
+            'data' => $save
+        ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
     public function show(Order $order)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Order $order)
+    public function edit($id, $status)
     {
-        //
+        $update = Order::whereId($id)->update([
+            'status' => strtoupper($status)
+        ]);
+
+        $find = Order::whereId($id)->first();
+        OrderStatusUpdate::dispatch($find, 'UPDATED');
+
+        return redirect('editstatus');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
+    public function editstatus()
+    {
+        $datas = Order::orderBy('id', 'desc')->get();
+        return view('edit', ['datas' => $datas]);
+    }
+
     public function update(Request $request, Order $order)
     {
-        //
+        $update = Order::whereId($order->id)->update([
+            'status' => request('status')
+        ]);
+        $find = Order::whereId($order->id)->first();
+        OrderStatusUpdate::dispatch($find, 'UPDATED');
+
+        return response()->json([
+            'data' => $find
+        ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function deleteall()
+    {
+        DB::table('orders')->truncate();
+        DB::table('order_details')->truncate();
+        return "OK";
     }
 }

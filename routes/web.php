@@ -18,4 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/list', 'HomeController@list')->name('home');
+Route::get('/list', 'HomeController@list')->name('list');
+Route::match(['get', 'post'],'/create', 'OrderController@create')->name('create');
+Route::get('/editstatus', 'OrderController@editstatus')->name('editstatus');
+Route::get('/editstatus/{id}/status/{status}', 'OrderController@edit')->name('edit');
+

@@ -16,6 +16,7 @@ class CreateOrderDetailsTable extends Migration
         Schema::create('order_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('table_id');
+            $table->uuid('uuid');
             $table->string('menu_name');
             $table->timestamps();
         });
