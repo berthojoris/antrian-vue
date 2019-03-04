@@ -59907,7 +59907,7 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   key: 'ANTRIAN_KEY',
   // wsHost: window.location.hostname,
   // wsPort: 6001,
-  wsHost: 'http://18.210.28.196',
+  wsHost: '18.210.28.196',
   wsPort: 3030,
   disableStats: true
 });
