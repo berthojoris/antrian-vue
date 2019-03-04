@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->call(function () {
+            DB::table('websockets_statistics_entries')->truncate();
+        })->everyMinute();
     }
 
     /**
