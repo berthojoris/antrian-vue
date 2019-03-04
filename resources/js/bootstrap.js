@@ -72,7 +72,7 @@ window.Echo = new Echo({
     key: 'ANTRIAN_KEY',
     // wsHost: window.location.hostname,
     // wsPort: 6001,
-    wsHost: 'http://18.210.28.196',
+    wsHost: '18.210.28.196',
     wsPort: 1234,
     disableStats: true,
 });
