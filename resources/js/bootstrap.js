@@ -73,6 +73,6 @@ window.Echo = new Echo({
     // wsHost: window.location.hostname,
     // wsPort: 6001,
     wsHost: '18.210.28.196',
-    wsPort: 3030,
+    wsPort: 1234,
     disableStats: true,
 });
