@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.8"
     },
     "dependencies": {
+        "dotenv": "^6.2.0",
         "laravel-echo": "^1.5.3",
         "pace-js": "^1.0.2",
         "pusher-js": "^4.4.0",

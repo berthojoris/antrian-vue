@@ -59858,6 +59858,8 @@ try {
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
+// require('dotenv').config();
+// process.env.WEBSOCKET_HOST
 
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -59905,10 +59907,8 @@ window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/d
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: 'ANTRIAN_KEY',
-  wsHost: window.location.hostname,
+  wsHost: '127.0.0.1',
   wsPort: 6001,
-  // wsHost: '18.210.28.196',
-  // wsPort: 1234,
   disableStats: true
 });
 

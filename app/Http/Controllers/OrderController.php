@@ -95,12 +95,11 @@ class OrderController extends Controller
             'status' => strtoupper($status)
         ]);
 
-        flash('Order telah diupdate')->success();
-
         $find = Order::whereId($id)->first();
         OrderStatusUpdate::dispatch($find, 'UPDATED');
 
-        return redirect('editstatus');
+        flash('Order telah diupdate')->success();
+        return back();
     }
 
     public function editstatus()

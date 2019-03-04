@@ -21,6 +21,9 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
+// require('dotenv').config();
+// process.env.WEBSOCKET_HOST
+
 window.axios = require('axios');
 window.axios.defaults.baseURL = process.env.API_URL;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -70,9 +73,7 @@ window.Pusher = require('pusher-js');
 window.Echo = new Echo({
     broadcaster: 'pusher',
     key: 'ANTRIAN_KEY',
-    wsHost: window.location.hostname,
+    wsHost: '127.0.0.1',
     wsPort: 6001,
-    // wsHost: '18.210.28.196',
-    // wsPort: 1234,
     disableStats: true,
 });
