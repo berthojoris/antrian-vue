@@ -128,6 +128,7 @@ class OrderController extends Controller
 
     public function deleteall()
     {
+        dd("test");
         DB::table('orders')->truncate();
         DB::table('order_details')->truncate();
         return "OK";
