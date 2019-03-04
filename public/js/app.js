@@ -59905,10 +59905,10 @@ window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/d
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: 'ANTRIAN_KEY',
-  // wsHost: window.location.hostname,
-  // wsPort: 6001,
-  wsHost: '18.210.28.196',
-  wsPort: 1234,
+  wsHost: window.location.hostname,
+  wsPort: 6001,
+  // wsHost: '18.210.28.196',
+  // wsPort: 1234,
   disableStats: true
 });
 
