@@ -23,6 +23,7 @@ class OrderController extends Controller
         if($request->isMethod('post')) {
 
             if(empty(request('menu')) || empty(request('table_id'))) {
+                flash('ID Tabel dan Menu belum dipilih')->error();
                 return redirect('create');
             }
 
