@@ -95,6 +95,8 @@ class OrderController extends Controller
             'status' => strtoupper($status)
         ]);
 
+        flash('Order telah diupdate')->success();
+
         $find = Order::whereId($id)->first();
         OrderStatusUpdate::dispatch($find, 'UPDATED');
 
