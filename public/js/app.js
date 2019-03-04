@@ -1845,10 +1845,21 @@ __webpack_require__.r(__webpack_exports__);
     window.Echo.channel('orders').listen('OrderStatusUpdate', function (e) {
       var dataPost = e.data;
       _this.statusPush = e.status;
+      var currentData = _this.items;
+      var index = -1;
 
-      _this.callAPIFromDB(); // this.items.push(dataPost)
-      // this.items.reverse()
+      for (var i = 0; i < currentData.length; i++) {
+        if (currentData[i].table_id === dataPost.table_id) {
+          index = i;
+          break;
+        }
+      }
 
+      if (index !== -1) {
+        currentData.splice(index, 1, dataPost).reverse();
+      } else {
+        currentData.push(dataPost).reverse();
+      }
 
       if (_this.statusPush == 'CREATED') {
         toastr.info("Incoming Order from table ID <b>" + dataPost.table_id + "</b>");

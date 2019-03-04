@@ -59,8 +59,7 @@ class OrderController extends Controller
                 return back();
             } catch (\Exception $e) {
                 DB::rollBack();
-                flash('Order gagal dibuat')->error();
-                return back();
+                dd($e);
             }
         }
 

@@ -46,9 +46,22 @@
             window.Echo.channel('orders').listen('OrderStatusUpdate', e => {
                 let dataPost = e.data;
                 this.statusPush = e.status
-                this.callAPIFromDB()
-                // this.items.push(dataPost)
-                // this.items.reverse()
+                var currentData = this.items
+
+                var index = -1
+                for (var i = 0; i < currentData.length; i++) {
+                    if (currentData[i].table_id === dataPost.table_id) {
+                        index = i
+                        break
+                    }
+                }
+
+                if (index !== -1) {
+                    currentData.splice(index, 1, dataPost).reverse()
+                } else {
+                    currentData.push(dataPost).reverse()
+                }
+
                 if(this.statusPush == 'CREATED') {
                     toastr.info("Incoming Order from table ID <b>"+dataPost.table_id+"</b>")
                 } else if(this.statusPush == 'UPDATED') {

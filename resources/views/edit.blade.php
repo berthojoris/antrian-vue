@@ -13,15 +13,16 @@
                             <tr>
                                 <th scope="col">ID Meja</th>
                                 <th scope="col"></th>
-                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($datas as $data)
                                 <tr>
                                     <td>{{ $data->table_id }}</td>
-                                    <td><a href="{{ url('editstatus/'.$data->id.'/status/packing') }}" class="btn btn-warning">PACKING</a></td>
-                                    <td><a href="{{ url('editstatus/'.$data->id.'/status/selesai') }}" class="btn btn-success">SELESAI</a></td>
+                                    <td>
+                                        <a href="{{ url('editstatus/'.$data->id.'/status/packing') }}" class="btn btn-warning">PACKING</a>
+                                        <a href="{{ url('editstatus/'.$data->id.'/status/selesai') }}" class="btn btn-success">SELESAI</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
