@@ -71,6 +71,7 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: 'ANTRIAN_KEY',
     wsHost: window.location.hostname,
-    wsPort: 6001,
+    // wsPort: 6001,
+    wsPort: 3030,
     disableStats: true,
 });

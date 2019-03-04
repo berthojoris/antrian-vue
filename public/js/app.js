@@ -59861,7 +59861,7 @@ try {
 
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.baseURL = Object({"MIX_PUSHER_APP_CLUSTER":"mt1","MIX_PUSHER_APP_KEY":"PAWOON_KEY","NODE_ENV":"development"}).API_URL;
+window.axios.defaults.baseURL = Object({"MIX_PUSHER_APP_CLUSTER":"mt1","MIX_PUSHER_APP_KEY":"ANTRIAN_KEY","NODE_ENV":"development"}).API_URL;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.toastr.options = {
   "closeButton": false,
@@ -59906,7 +59906,8 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: 'ANTRIAN_KEY',
   wsHost: window.location.hostname,
-  wsPort: 6001,
+  // wsPort: 6001,
+  wsPort: 3030,
   disableStats: true
 });
 
