@@ -11,15 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@list')->name('homelist');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/list', 'HomeController@list')->name('list');
-Route::match(['get', 'post'],'/create', 'OrderController@create')->name('create');
-Route::get('/editstatus', 'OrderController@editstatus')->name('editstatus');
-Route::get('/editstatus/{id}/status/{status}', 'OrderController@edit')->name('edit');
+Route::match(['get', 'post'],'/create', 'OrderController@create')->name('create')->middleware('auth');
+Route::get('/editstatus', 'OrderController@editstatus')->name('editstatus')->middleware('auth');
+Route::get('/editstatus/{id}/status/{status}', 'OrderController@edit')->name('edit')->middleware('auth');
 
