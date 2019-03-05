@@ -47700,14 +47700,14 @@ var render = function() {
                   _c("section", { staticClass: "box" }, [
                     item.status == "SEDANG DIPROSES"
                       ? _c("i", {
-                          staticClass: "icon big rounded color1 fa-rocket"
+                          staticClass: "icon big rounded color1 fa fa-cutlery"
                         })
                       : item.status == "SIAP"
                       ? _c("i", {
-                          staticClass: "icon big rounded kuning fa-rocket"
+                          staticClass: "icon big rounded kuning fa fa-cutlery"
                         })
                       : _c("i", {
-                          staticClass: "icon big rounded color10 fa-rocket"
+                          staticClass: "icon big rounded color10 fa fa-cutlery"
                         }),
                     _vm._v(" "),
                     _c("h3", [_vm._v(_vm._s(item.table_name))]),
