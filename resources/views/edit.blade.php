@@ -23,6 +23,7 @@
                                     <td>
                                         <a href="{{ url('editstatus/'.$data->id.'/status/packing') }}" class="btn btn-warning">PACKING</a>
                                         <a href="{{ url('editstatus/'.$data->id.'/status/selesai') }}" class="btn btn-success">SELESAI</a>
+                                        <a href="{{ url('delete/'.$data->id) }}" class="btn btn-danger">DELETE</a>
                                     </td>
                                 </tr>
                             @endforeach

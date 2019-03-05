@@ -123,7 +123,8 @@ class OrderController extends Controller
 
     public function destroy(Order $order)
     {
-        //
+        dd($order);
+        Order::find($order)->delete();
     }
 
     public function deleteall()

@@ -20,4 +20,5 @@ Route::get('/list', 'HomeController@list')->name('list');
 Route::match(['get', 'post'],'/create', 'OrderController@create')->name('create')->middleware('auth');
 Route::get('/editstatus', 'OrderController@editstatus')->name('editstatus')->middleware('auth');
 Route::get('/editstatus/{id}/status/{status}', 'OrderController@edit')->name('edit')->middleware('auth');
+Route::get('/delete/{id}', 'OrderController@destroy')->name('delete')->middleware('auth');
 
