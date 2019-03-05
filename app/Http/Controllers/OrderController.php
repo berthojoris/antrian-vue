@@ -55,8 +55,8 @@ class OrderController extends Controller
                 OrderDetail::insert($menuForm);
 
                 DB::commit();
-                flash('Order telah dibuat')->success();
                 OrderStatusUpdate::dispatch($save, 'CREATED');
+                flash('Order telah dibuat')->success();
                 return back();
             } catch (\Exception $e) {
                 DB::rollBack();
@@ -78,6 +78,8 @@ class OrderController extends Controller
         ]);
 
         OrderStatusUpdate::dispatch($save, 'CREATED');
+
+        flash('Order telah dibuatkan')->success();
 
         return response()->json([
             'data' => $save
