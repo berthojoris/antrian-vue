@@ -73,7 +73,7 @@ window.Pusher = require('pusher-js');
 window.Echo = new Echo({
     broadcaster: 'pusher',
     key: 'ANTRIAN_KEY',
-    wsHost: '18.210.28.196',
+    wsHost: window.location.hostname,
     wsPort: 1234,
     disableStats: true,
 });
