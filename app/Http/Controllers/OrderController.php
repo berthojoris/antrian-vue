@@ -124,9 +124,12 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $find = Order::whereId($id)->first();
-        dd($find);
-        flash('Order telah dihapus')->success();
-        return back();
+        if(!empty($find)) {
+            OrderStatusUpdate::dispatch($find, 'DELETED');
+            $find->delete();
+            flash('Order telah dihapus')->success();
+            return back();
+        }
     }
 
     public function deleteall()

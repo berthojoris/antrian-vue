@@ -8,7 +8,7 @@
                         <i v-else-if="item.status == 'PACKING'" class="icon big rounded color3 fa-rocket"></i>
                         <i v-else class="icon big rounded color10 fa-rocket"></i>
                         <h3>{{ item.table_name }}</h3>
-                        <h4 v-if="item.status == 'SEDANG DIPROSES'">{{ item.status }}</h4>
+                        <h4 v-if="item.status == 'SEDANG DIPROSES'">MEJA {{ item.table_id }} | {{ item.status }}</h4>
                         <h4 v-else-if="item.status == 'PACKING'">{{ item.status }}</h4>
                         <h4 v-else>{{ item.status }}</h4>
                         <p>Tanggal order : {{ item.created_at }}</p>
@@ -54,7 +54,10 @@
                     toastr.info("Incoming Order from table ID <b>"+dataPost.table_id+"</b>")
                 } else if(this.statusPush == 'UPDATED') {
                     toastr.success("Order status change for table ID <b>"+dataPost.table_id+"</b>")
-                } else {
+                } else if(this.statusPush == 'DELETED') {
+                    toastr.success("Order deleted for table ID <b>"+dataPost.table_id+"</b>")
+                }
+                else {
                     toastr.warning(this.statusPush)
                 }
             })

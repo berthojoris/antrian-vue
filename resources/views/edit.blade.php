@@ -13,6 +13,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">ID Meja</th>
+                                <th scope="col">Nama Pemesan</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -20,6 +21,7 @@
                             @foreach ($datas as $data)
                                 <tr>
                                     <td>{{ $data->table_id }}</td>
+                                    <td>{{ $data->table_name }}</td>
                                     <td>
                                         <a href="{{ url('editstatus/'.$data->id.'/status/packing') }}" class="btn btn-warning">PACKING</a>
                                         <a href="{{ url('editstatus/'.$data->id.'/status/selesai') }}" class="btn btn-success">SELESAI</a>

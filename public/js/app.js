@@ -1820,6 +1820,8 @@ __webpack_require__.r(__webpack_exports__);
         toastr.info("Incoming Order from table ID <b>" + dataPost.table_id + "</b>");
       } else if (_this.statusPush == 'UPDATED') {
         toastr.success("Order status change for table ID <b>" + dataPost.table_id + "</b>");
+      } else if (_this.statusPush == 'DELETED') {
+        toastr.success("Order deleted for table ID <b>" + dataPost.table_id + "</b>");
       } else {
         toastr.warning(_this.statusPush);
       }
@@ -47666,7 +47668,14 @@ var render = function() {
                 _c("h3", [_vm._v(_vm._s(item.table_name))]),
                 _vm._v(" "),
                 item.status == "SEDANG DIPROSES"
-                  ? _c("h4", [_vm._v(_vm._s(item.status))])
+                  ? _c("h4", [
+                      _vm._v(
+                        "MEJA " +
+                          _vm._s(item.table_id) +
+                          " | " +
+                          _vm._s(item.status)
+                      )
+                    ])
                   : item.status == "PACKING"
                   ? _c("h4", [_vm._v(_vm._s(item.status))])
                   : _c("h4", [_vm._v(_vm._s(item.status))]),
