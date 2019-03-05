@@ -1784,6 +1784,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1801,19 +1807,31 @@ __webpack_require__.r(__webpack_exports__);
       var dataPost = e.data;
       _this.statusPush = e.status;
       var currentData = _this.items;
-      var index = -1;
 
-      for (var i = 0; i < currentData.length; i++) {
-        if (currentData[i].table_id === dataPost.table_id) {
-          index = i;
-          break;
+      if (_this.statusPush == "UPDATED") {
+        var index = -1;
+
+        for (var i = 0; i < currentData.length; i++) {
+          if (currentData[i].table_id === dataPost.table_id) {
+            index = i;
+            break;
+          }
         }
-      }
 
-      if (index !== -1) {
-        currentData.splice(index, 1, dataPost).reverse();
+        if (index !== -1) {
+          currentData.splice(index, 1, dataPost).reverse();
+        } else {
+          currentData.push(dataPost).reverse();
+        }
+      } else if (_this.statusPush == "DELETED") {
+        var found = '';
+        found = currentData.find(function (element) {
+          return element.table_id == dataPost.table_id;
+        });
+        currentData.splice(currentData.indexOf(found), 1);
       } else {
-        currentData.push(dataPost).reverse();
+        currentData.push(dataPost);
+        currentData.reverse();
       }
 
       if (_this.statusPush == 'CREATED') {
@@ -47642,53 +47660,98 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    { staticClass: "wrapper style1 special", attrs: { id: "one" } },
-    [
-      _c("div", { staticClass: "container" }, [
-        _c(
-          "div",
-          { staticClass: "row 150%" },
-          _vm._l(_vm.items, function(item) {
-            return _c("div", { key: item.id, staticClass: "4u 12u(medium)" }, [
-              _c("section", { staticClass: "box" }, [
-                item.status == "SEDANG DIPROSES"
-                  ? _c("i", {
-                      staticClass: "icon big rounded color1 fa-rocket"
-                    })
-                  : item.status == "PACKING"
-                  ? _c("i", {
-                      staticClass: "icon big rounded color3 fa-rocket"
-                    })
-                  : _c("i", {
-                      staticClass: "icon big rounded color10 fa-rocket"
-                    }),
-                _vm._v(" "),
-                _c("h3", [_vm._v(_vm._s(item.table_name))]),
-                _vm._v(" "),
-                item.status == "SEDANG DIPROSES"
-                  ? _c("h4", [
-                      _vm._v(
-                        "MEJA " +
-                          _vm._s(item.table_id) +
-                          " | " +
-                          _vm._s(item.status)
-                      )
-                    ])
-                  : item.status == "PACKING"
-                  ? _c("h4", [_vm._v(_vm._s(item.status))])
-                  : _c("h4", [_vm._v(_vm._s(item.status))]),
-                _vm._v(" "),
-                _c("p", [_vm._v("Tanggal order : " + _vm._s(item.created_at))])
+  return _c("div", { staticClass: "panel" }, [
+    _c(
+      "section",
+      { staticClass: "wrapper style1 special", attrs: { id: "one" } },
+      [
+        _c("div", { staticClass: "container" }, [
+          _c(
+            "header",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: this.items === undefined || this.items.length == 0,
+                  expression:
+                    "this.items === undefined || this.items.length == 0"
+                }
+              ],
+              staticClass: "major"
+            },
+            [
+              _c("h2", [_vm._v("Sedang Tidak Ada Antrian Saat Ini")]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v("Layar Akan Menampilkan Antrian Jika Ada Pesanan")
               ])
-            ])
-          }),
-          0
-        )
-      ])
-    ]
-  )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "row 150%" },
+            _vm._l(_vm.items, function(item) {
+              return _c(
+                "div",
+                { key: item.id, staticClass: "4u 12u(medium)" },
+                [
+                  _c("section", { staticClass: "box" }, [
+                    item.status == "SEDANG DIPROSES"
+                      ? _c("i", {
+                          staticClass: "icon big rounded color1 fa-rocket"
+                        })
+                      : item.status == "SIAP"
+                      ? _c("i", {
+                          staticClass: "icon big rounded kuning fa-rocket"
+                        })
+                      : _c("i", {
+                          staticClass: "icon big rounded color10 fa-rocket"
+                        }),
+                    _vm._v(" "),
+                    _c("h3", [_vm._v(_vm._s(item.table_name))]),
+                    _vm._v(" "),
+                    item.status == "SEDANG DIPROSES"
+                      ? _c("h4", [
+                          _vm._v(
+                            "MEJA " +
+                              _vm._s(item.table_id) +
+                              " | " +
+                              _vm._s(item.status)
+                          )
+                        ])
+                      : item.status == "SIAP"
+                      ? _c("h4", [
+                          _vm._v(
+                            "MEJA " +
+                              _vm._s(item.table_id) +
+                              " | " +
+                              _vm._s(item.status)
+                          )
+                        ])
+                      : _c("h4", [
+                          _vm._v(
+                            "MEJA " +
+                              _vm._s(item.table_id) +
+                              " | " +
+                              _vm._s(item.status)
+                          )
+                        ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("Tanggal order : " + _vm._s(item.created_at))
+                    ])
+                  ])
+                ]
+              )
+            }),
+            0
+          )
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

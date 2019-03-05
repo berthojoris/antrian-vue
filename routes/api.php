@@ -17,7 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/deleteall', 'OrderController@deleteall')->name('deleteall');
 Route::post('/store', 'OrderController@store')->name('store');
 Route::match(['get', 'post'],'/update/{order}', 'OrderController@update')->name('update');
 Route::get('/orderlist', 'OrderController@index')->name('index.order');

@@ -1,22 +1,28 @@
 <template>
+<div class="panel">
     <section id="one" class="wrapper style1 special">
         <div class="container">
+            <header class="major" v-show="this.items === undefined || this.items.length == 0">
+                <h2>Sedang Tidak Ada Antrian Saat Ini</h2>
+                <p>Layar Akan Menampilkan Antrian Jika Ada Pesanan</p>
+            </header>
             <div class="row 150%">
                 <div class="4u 12u(medium)" v-for="item in items" :key="item.id">
                     <section class="box">
                         <i v-if="item.status == 'SEDANG DIPROSES'" class="icon big rounded color1 fa-rocket"></i>
-                        <i v-else-if="item.status == 'PACKING'" class="icon big rounded color3 fa-rocket"></i>
+                        <i v-else-if="item.status == 'SIAP'" class="icon big rounded kuning fa-rocket"></i>
                         <i v-else class="icon big rounded color10 fa-rocket"></i>
                         <h3>{{ item.table_name }}</h3>
                         <h4 v-if="item.status == 'SEDANG DIPROSES'">MEJA {{ item.table_id }} | {{ item.status }}</h4>
-                        <h4 v-else-if="item.status == 'PACKING'">{{ item.status }}</h4>
-                        <h4 v-else>{{ item.status }}</h4>
+                        <h4 v-else-if="item.status == 'SIAP'">MEJA {{ item.table_id }} | {{ item.status }}</h4>
+                        <h4 v-else>MEJA {{ item.table_id }} | {{ item.status }}</h4>
                         <p>Tanggal order : {{ item.created_at }}</p>
                     </section>
                 </div>
             </div>
         </div>
     </section>
+</div>
 </template>
 
 <script>
@@ -36,18 +42,28 @@
                 this.statusPush = e.status
                 var currentData = this.items
 
-                var index = -1
-                for (var i = 0; i < currentData.length; i++) {
-                    if (currentData[i].table_id === dataPost.table_id) {
-                        index = i
-                        break
+                if(this.statusPush == "UPDATED") {
+                    var index = -1
+                    for (var i = 0; i < currentData.length; i++) {
+                        if (currentData[i].table_id === dataPost.table_id) {
+                            index = i
+                            break
+                        }
                     }
-                }
-
-                if (index !== -1) {
-                    currentData.splice(index, 1, dataPost).reverse()
+                    if (index !== -1) {
+                        currentData.splice(index, 1, dataPost).reverse()
+                    } else {
+                        currentData.push(dataPost).reverse()
+                    }
+                } else if(this.statusPush == "DELETED") {
+                    let found = ''
+                    found = currentData.find(function(element) {
+                        return element.table_id == dataPost.table_id
+                    });
+                    currentData.splice(currentData.indexOf(found), 1);
                 } else {
-                    currentData.push(dataPost).reverse()
+                    currentData.push(dataPost)
+                    currentData.reverse()
                 }
 
                 if(this.statusPush == 'CREATED') {

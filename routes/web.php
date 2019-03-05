@@ -21,4 +21,5 @@ Route::match(['get', 'post'],'/create', 'OrderController@create')->name('create'
 Route::get('/editstatus', 'OrderController@editstatus')->name('editstatus')->middleware('auth');
 Route::get('/editstatus/{id}/status/{status}', 'OrderController@edit')->name('edit')->middleware('auth');
 Route::get('/delete/{id}', 'OrderController@destroy')->name('delete')->middleware('auth');
+Route::get('/deleteall', 'OrderController@deleteall')->name('deleteall')->middleware('auth');
 

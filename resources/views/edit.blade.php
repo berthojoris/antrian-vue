@@ -21,9 +21,9 @@
                             @foreach ($datas as $data)
                                 <tr>
                                     <td>{{ $data->table_id }}</td>
-                                    <td>{{ $data->table_name }}</td>
+                                    <td>{{ Str::limit($data->table_name, 10, '...')}}</td>
                                     <td>
-                                        <a href="{{ url('editstatus/'.$data->id.'/status/packing') }}" class="btn btn-warning">PACKING</a>
+                                        <a href="{{ url('editstatus/'.$data->id.'/status/siap') }}" class="btn btn-warning">SIAP</a>
                                         <a href="{{ url('editstatus/'.$data->id.'/status/selesai') }}" class="btn btn-success">SELESAI</a>
                                         <a href="{{ url('delete/'.$data->id) }}" class="btn btn-danger">DELETE</a>
                                     </td>
