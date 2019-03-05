@@ -1829,6 +1829,7 @@ __webpack_require__.r(__webpack_exports__);
           return element.table_id == dataPost.table_id;
         });
         currentData.splice(currentData.indexOf(found), 1);
+        currentData.reverse();
       } else {
         currentData.push(dataPost);
         currentData.reverse();
