@@ -121,10 +121,12 @@ class OrderController extends Controller
         ], 200);
     }
 
-    public function destroy(Order $order)
+    public function destroy($id)
     {
-        dd($order);
-        Order::find($order)->delete();
+        $find = Order::whereId($id)->first();
+        dd($find);
+        flash('Order telah dihapus')->success();
+        return back();
     }
 
     public function deleteall()
