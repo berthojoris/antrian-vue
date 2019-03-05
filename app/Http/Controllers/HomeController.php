@@ -11,7 +11,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth', [
-            'except' => ['list']
+            'except' => ['list', 'dashboard']
         ]);
     }
 
@@ -23,5 +23,10 @@ class HomeController extends Controller
     public function list()
     {
         return view('list');
+    }
+
+    public function dashboard()
+    {
+        return view('dashboard');
     }
 }

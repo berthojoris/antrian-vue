@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'HomeController@list')->name('homelist');
+Route::get('/', 'HomeController@dashboard')->name('dashboard');
 
 Auth::routes();
 
