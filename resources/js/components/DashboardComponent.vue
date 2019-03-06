@@ -16,7 +16,7 @@
                         <h4 v-if="item.status == 'SEDANG DIPROSES'">MEJA {{ item.table_id }} | {{ item.status }}</h4>
                         <h4 v-else-if="item.status == 'SIAP'">MEJA {{ item.table_id }} | {{ item.status }}</h4>
                         <h4 v-else>MEJA {{ item.table_id }} | {{ item.status }}</h4>
-                        <p>Tanggal order : {{ item.created_at }}</p>
+                        <p>Waktu order : {{ item.created_at }}</p>
                     </section>
                 </div>
             </div>
