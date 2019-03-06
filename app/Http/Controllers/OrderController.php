@@ -15,7 +15,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        return Order::orderBy('id', 'desc')->get();
+        return Order::orderBy('updated_at', 'desc')->get();
     }
 
     public function create(Request $request)
@@ -96,7 +96,6 @@ class OrderController extends Controller
         $update = Order::whereId($id)->update([
             'status' => strtoupper($status)
         ]);
-
         $find = Order::whereId($id)->first();
         OrderStatusUpdate::dispatch($find, 'UPDATED');
 
@@ -106,7 +105,7 @@ class OrderController extends Controller
 
     public function editstatus()
     {
-        $datas = Order::orderBy('id', 'desc')->get();
+        $datas = Order::orderBy('updated_at', 'desc')->get();
         return view('edit', ['datas' => $datas]);
     }
 

@@ -10,7 +10,7 @@
                 <div class="4u 12u(medium)" v-for="item in items" :key="item.id">
                     <section class="box">
                         <i v-if="item.status == 'SEDANG DIPROSES'" class="icon big rounded color1 fa fa-cutlery"></i>
-                        <i v-else-if="item.status == 'SIAP'" class="icon big rounded kuning fa fa-cutlery"></i>
+                        <i v-else-if="item.status == 'SIAP'" class="icon big rounded color7 fa fa-cutlery"></i>
                         <i v-else class="icon big rounded color10 fa fa-cutlery"></i>
                         <h3>{{ item.table_name }}</h3>
                         <h4 v-if="item.status == 'SEDANG DIPROSES'">MEJA {{ item.table_id }} | {{ item.status }}</h4>
@@ -43,24 +43,19 @@
                 var currentData = this.items
 
                 if(this.statusPush == "UPDATED") {
-                    var index = -1
-                    for (var i = 0; i < currentData.length; i++) {
-                        if (currentData[i].table_id === dataPost.table_id) {
-                            index = i
-                            break
-                        }
-                    }
-                    if (index !== -1) {
-                        currentData.splice(index, 1, dataPost).reverse()
-                    } else {
-                        currentData.push(dataPost).reverse()
-                    }
+                    let check = ''
+                    let sort = []
+                    check = _.find(currentData, function(element) { 
+                        return element.table_id == dataPost.table_id 
+                    })
+                    currentData.splice(currentData.indexOf(check), 1)
+                    currentData.push(dataPost)
+                    sort = _.sortBy(currentData, [function(o) { return o.updated_at; }])
+                    this.items = _.reverse(sort);
                 } else if(this.statusPush == "DELETED") {
                     let found = ''
-                    found = currentData.find(function(element) {
-                        return element.table_id == dataPost.table_id
-                    });
-                    currentData.splice(currentData.indexOf(found), 1);
+                    found = _.find(currentData, function(element) { return element.table_id == dataPost.table_id })
+                    currentData.splice(currentData.indexOf(found), 1)
                     currentData.reverse()
                 } else {
                     currentData.push(dataPost)
