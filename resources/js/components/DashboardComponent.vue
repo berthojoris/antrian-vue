@@ -2,7 +2,7 @@
 <div class="panel">
     <section id="one" class="wrapper style1 special">
         <div class="container">
-            <header class="major" v-show="this.items === undefined || this.items.length == 0">
+            <header class="major" v-show="checkEmptyArr(items)">
                 <h2>Sedang Tidak Ada Antrian Saat Ini</h2>
                 <p>Layar Akan Menampilkan Antrian Jika Ada Pesanan</p>
             </header>
@@ -82,6 +82,9 @@
         methods: {
             callAPIFromDB: function () {
                 axios.get('api/orderlist').then(response => (this.items = response.data));
+            },
+            checkEmptyArr: function(arr) {
+                return _.isEmpty(arr)
             }
         }
     }
