@@ -3,7 +3,7 @@
     <section id="one" class="wrapper style1 special">
         <div class="container">
             <header class="major" v-show="checkEmptyArr(items)">
-                <h2>Sedang Tidak Ada Antrian Saat Ini</h2>
+                <h2>Tidak Ada Antrian Saat Ini</h2>
                 <p>Layar Akan Menampilkan Antrian Jika Ada Pesanan</p>
             </header>
             <div class="row 150%">
