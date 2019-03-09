@@ -23,3 +23,4 @@ Route::get('/editstatus/{id}/status/{status}', 'OrderController@edit')->name('ed
 Route::get('/delete/{id}', 'OrderController@destroy')->name('delete')->middleware('auth');
 Route::get('/deleteall', 'OrderController@deleteall')->name('deleteall')->middleware('auth');
 
+Route::view('/todo', 'todo');
