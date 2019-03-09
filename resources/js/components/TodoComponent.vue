@@ -7,18 +7,17 @@
                     Tugas Harian
                 </div>
                 <div class="card-body">
-                    <input id="task" v-model="todo.name" type="text" name="task" value="" required="required" autofocus="autofocus" class="form-control" autocomplete="off" v-on:keyup.enter="addTask">
+                    <input id="task" v-model="todo.name" type="text" name="task" value="" autofocus="autofocus" class="form-control" autocomplete="off" v-on:keyup.enter="addTask">
                     <hr>
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Apa saja yang dikerjakan</th>
+                                <th>Tindakan</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr  v-for="(item, index) in listTask" :key="index">
-                                <td>{{ item.name }}</td>
-                            </tr>
+                            <comp-todo-item v-for="(item, index) in listTask" v-bind:item="item" v-bind:key="index"></comp-todo-item>
                         </tbody>
                     </table>
                 </div>
@@ -36,7 +35,12 @@
 export default {
     data() {
         return {
-            listTask: [],
+            listTask: [
+                {
+                    name: 'Bangun',
+                    done: true,
+                },
+            ],
             todo: {
 				name: '',
 				done: false

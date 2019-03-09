@@ -24,6 +24,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('list-order', require('./components/ListOrderComponent.vue').default);
 Vue.component('list-dashboard', require('./components/DashboardComponent.vue').default);
 Vue.component('comp-todo', require('./components/TodoComponent.vue').default);
+Vue.component('comp-todo-item', require('./components/TodoItemComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
