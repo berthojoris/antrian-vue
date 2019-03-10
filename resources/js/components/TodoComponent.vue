@@ -7,7 +7,7 @@
                     Tugas Harian
                 </div>
                 <div class="card-body">
-                    <input id="task" v-model="todo.name" type="text" name="task" value="" autofocus="autofocus" class="form-control" autocomplete="off" v-on:keyup.enter="addTask">
+                    <input id="task" v-model="todo.name" type="text" name="task" value="" autofocus="autofocus" class="form-control" autocomplete="off" v-on:keyup.enter="addTask" placeholder="Masukan todo anda">
                     <hr>
                     <div class="alert alert-info" role="alert" v-show="empty(listTask)">
                         Sedang tidak ada todo yg akan dikerjakan

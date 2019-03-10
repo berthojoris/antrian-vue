@@ -48080,7 +48080,8 @@ var render = function() {
                 name: "task",
                 value: "",
                 autofocus: "autofocus",
-                autocomplete: "off"
+                autocomplete: "off",
+                placeholder: "Masukan todo anda"
               },
               domProps: { value: _vm.todo.name },
               on: {
