@@ -2042,35 +2042,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      listTask: [{
-        name: 'Bangun',
-        done: true
-      }],
       todo: {
         name: '',
         done: false
@@ -2088,30 +2063,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(['add', 'remove', 'update']), {
-    addTask: function addTask() {
-      if (this.task != '') {
-        this.listTask.push(this.todo);
-        this.todo = {
-          name: '',
-          done: false
-        };
-        this.resetFom();
-      }
-    },
-    resetFom: function resetFom() {
-      this.todo.name = '';
-    },
-    toggleTodo: function toggleTodo(todo) {
-      var index = this.listTask.indexOf(todo);
-      this.listTask[index].done = !this.listTask[index].done;
-    },
-    deleteTodo: function deleteTodo(todo) {
-      var index = this.listTask.indexOf(todo);
-      this.listTask.splice(index, 1);
-    },
     check: function check(arr) {
-      return false;
-
       if (_.isEmpty(arr)) {
         return false;
       } else {
@@ -2139,6 +2091,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2154,6 +2111,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['item'],
   computed: {
@@ -2163,14 +2121,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
-  methods: {
-    toggleTodo: function toggleTodo() {
-      this.$emit('toggleTodo', this.item);
-    },
-    deleteTodo: function deleteTodo() {
-      this.$emit('deleteTodo', this.item);
-    }
-  }
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(['add', 'remove', 'update']))
 });
 
 /***/ }),
@@ -48225,47 +48176,6 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.todo.name,
-                  expression: "todo.name"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                id: "task",
-                type: "text",
-                name: "task",
-                value: "",
-                autofocus: "autofocus",
-                autocomplete: "off",
-                placeholder: "Masukan todo anda"
-              },
-              domProps: { value: _vm.todo.name },
-              on: {
-                keyup: function($event) {
-                  if (
-                    !$event.type.indexOf("key") &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.addTask($event)
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.todo, "name", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
                   value: _vm.newTodo,
                   expression: "newTodo"
                 }
@@ -48308,8 +48218,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.empty(_vm.listTask),
-                    expression: "empty(listTask)"
+                    value: _vm.empty(_vm.todos),
+                    expression: "empty(todos)"
                   }
                 ],
                 staticClass: "alert alert-info",
@@ -48322,24 +48232,34 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("table", { staticClass: "table table-bordered table-striped" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.todos, function(item, index) {
-                  return _c("comp-todo-item", {
-                    key: index,
-                    attrs: { item: item },
-                    on: {
-                      toggleTodo: _vm.toggleTodo,
-                      deleteTodo: _vm.deleteTodo
-                    }
-                  })
-                }),
-                1
-              )
-            ])
+            _c(
+              "table",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.check(_vm.todos),
+                    expression: "check(todos)"
+                  }
+                ],
+                staticClass: "table table-bordered table-striped"
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.todos, function(item, index) {
+                    return _c("comp-todo-item", {
+                      key: index,
+                      attrs: { item: item }
+                    })
+                  }),
+                  1
+                )
+              ]
+            )
           ])
         ])
       ])
@@ -48387,13 +48307,27 @@ var render = function() {
     _c("td", [
       _c(
         "button",
-        { staticClass: "btn btn-success", on: { click: _vm.toggleTodo } },
+        {
+          staticClass: "btn btn-success",
+          on: {
+            click: function($event) {
+              return _vm.update(_vm.item)
+            }
+          }
+        },
         [_vm._v("Done")]
       ),
       _vm._v("\r\n           \r\n        "),
       _c(
         "button",
-        { staticClass: "btn btn-danger", on: { click: _vm.deleteTodo } },
+        {
+          staticClass: "btn btn-danger",
+          on: {
+            click: function($event) {
+              return _vm.remove(_vm.item)
+            }
+          }
+        },
         [_vm._v("Delete")]
       )
     ])
@@ -62070,7 +62004,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       if (state.newTodo.trim().length < 1) return;
       state.todos.push({
         name: state.newTodo.trim(),
-        finishedAt: null
+        finishedAt: null,
+        done: false
       });
       state.newTodo = '';
     },
@@ -62082,6 +62017,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       var DateTime = new Date();
 
       if (todo.finishedAt) {
+        todo.done = !todo.done;
         todo.finishedAt = DateTime.toISOString();
       }
     },

@@ -2,9 +2,9 @@
 <tr>
     <td v-bind:style="isActive">{{ item.name }}</td>
     <td>
-        <button class="btn btn-success" v-on:click="toggleTodo">Done</button>
+        <button class="btn btn-success" @click="update(item)">Done</button>
         &nbsp;&nbsp;&nbsp;
-        <button class="btn btn-danger" v-on:click="deleteTodo">Delete</button>
+        <button class="btn btn-danger" @click="remove(item)">Delete</button>
     </td>
 </tr>
 </template>
@@ -14,6 +14,8 @@
 </style>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+
 export default {
     props: ['item'],
     computed: {
@@ -24,12 +26,7 @@ export default {
         }
     },
     methods: {
-        toggleTodo(){
-			this.$emit('toggleTodo', this.item)
-		},
-		deleteTodo(){
-			this.$emit('deleteTodo', this.item)
-		}
+        ...mapMutations(['add', 'remove', 'update']),
     }
 }
 </script>

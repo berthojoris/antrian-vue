@@ -7,14 +7,12 @@
                     Tugas Harian
                 </div>
                 <div class="card-body">
-                    <input id="task" v-model="todo.name" type="text" name="task" value="" autofocus="autofocus" class="form-control" autocomplete="off" @keyup.enter="addTask" placeholder="Masukan todo anda">
-                    <br>
                     <input v-model="newTodo" @keyup.enter="add" type="text" name="task" value="" autofocus="autofocus" class="form-control" autocomplete="off" placeholder="Masukan todo vuex anda">
                     <hr>
-                    <div class="alert alert-info" role="alert" v-show="empty(listTask)">
+                    <div class="alert alert-info" role="alert" v-show="empty(todos)">
                         Sedang tidak ada todo yg akan dikerjakan
                     </div>
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-bordered table-striped" v-show="check(todos)">
                         <thead>
                             <tr>
                                 <th>Apa saja yang dikerjakan</th>
@@ -25,29 +23,10 @@
                             <comp-todo-item 
                                 v-for="(item, index) in todos" 
                                 :item="item" 
-                                :key="index" 
-                                v-on:toggleTodo="toggleTodo" 
-                                v-on:deleteTodo="deleteTodo">
+                                :key="index">
                             </comp-todo-item>
                         </tbody>
                     </table>
-                    <!-- <table class="table table-bordered table-striped" v-show="check(listTask)">
-                        <thead>
-                            <tr>
-                                <th>Apa saja yang dikerjakan</th>
-                                <th>Tindakan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <comp-todo-item 
-                                v-for="(item, index) in listTask" 
-                                :item="item" 
-                                :key="index" 
-                                v-on:toggleTodo="toggleTodo" 
-                                v-on:deleteTodo="deleteTodo">
-                            </comp-todo-item>
-                        </tbody>
-                    </table> -->
                 </div>
             </div>
         </div>
@@ -65,12 +44,6 @@ import { mapState, mapMutations } from 'vuex'
 export default {
     data() {
         return {
-            listTask: [
-                {
-                    name: 'Bangun',
-                    done: true,
-                },
-            ],
             todo: {
 				name: '',
 				done: false
@@ -88,29 +61,7 @@ export default {
     methods: {
         ...mapMutations(['add', 'remove', 'update']),
 
-        addTask() {
-            if(this.task != '') {
-                this.listTask.push(this.todo)
-				this.todo = {
-					name: '',
-					done: false
-				}
-                this.resetFom()
-            }
-        },
-        resetFom() {
-            this.todo.name = ''
-        },
-        toggleTodo(todo) {
-            let index = this.listTask.indexOf(todo);
-			this.listTask[index].done = !this.listTask[index].done
-        },
-        deleteTodo(todo) {
-            let index = this.listTask.indexOf(todo);
-			this.listTask.splice(index, 1)
-        },
         check: function(arr) {
-            return false
             if(_.isEmpty(arr)) {
                 return false
             } else {
