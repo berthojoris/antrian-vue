@@ -7,12 +7,31 @@
                     Tugas Harian
                 </div>
                 <div class="card-body">
-                    <input id="task" v-model="todo.name" type="text" name="task" value="" autofocus="autofocus" class="form-control" autocomplete="off" v-on:keyup.enter="addTask" placeholder="Masukan todo anda">
+                    <input id="task" v-model="todo.name" type="text" name="task" value="" autofocus="autofocus" class="form-control" autocomplete="off" @keyup.enter="addTask" placeholder="Masukan todo anda">
+                    <br>
+                    <input v-model="newTodo" @keyup.enter="add" type="text" name="task" value="" autofocus="autofocus" class="form-control" autocomplete="off" placeholder="Masukan todo vuex anda">
                     <hr>
                     <div class="alert alert-info" role="alert" v-show="empty(listTask)">
                         Sedang tidak ada todo yg akan dikerjakan
                     </div>
-                    <table class="table table-bordered table-striped" v-show="check(listTask)">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Apa saja yang dikerjakan</th>
+                                <th>Tindakan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <comp-todo-item 
+                                v-for="(item, index) in todos" 
+                                :item="item" 
+                                :key="index" 
+                                v-on:toggleTodo="toggleTodo" 
+                                v-on:deleteTodo="deleteTodo">
+                            </comp-todo-item>
+                        </tbody>
+                    </table>
+                    <!-- <table class="table table-bordered table-striped" v-show="check(listTask)">
                         <thead>
                             <tr>
                                 <th>Apa saja yang dikerjakan</th>
@@ -28,7 +47,7 @@
                                 v-on:deleteTodo="deleteTodo">
                             </comp-todo-item>
                         </tbody>
-                    </table>
+                    </table> -->
                 </div>
             </div>
         </div>
@@ -41,6 +60,8 @@
 </style>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+
 export default {
     data() {
         return {
@@ -56,7 +77,17 @@ export default {
 			}
         }
     },
+    computed: {
+        ...mapState(['todos']),
+
+        newTodo: {
+            get () {return this.$store.state.newTodo},
+            set (value) {return this.$store.commit('newTodo', value)},
+        },
+    },
     methods: {
+        ...mapMutations(['add', 'remove', 'update']),
+
         addTask() {
             if(this.task != '') {
                 this.listTask.push(this.todo)
@@ -79,6 +110,7 @@ export default {
 			this.listTask.splice(index, 1)
         },
         check: function(arr) {
+            return false
             if(_.isEmpty(arr)) {
                 return false
             } else {
