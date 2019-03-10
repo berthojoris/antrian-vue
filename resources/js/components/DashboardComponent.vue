@@ -10,7 +10,7 @@
                 <div class="4u 12u(medium)" v-for="item in items" :key="item.id">
                     <section class="box">
                         <i v-if="item.status == 'SEDANG DIPROSES'" class="icon big rounded color1 fa fa-cutlery"></i>
-                        <i v-else-if="item.status == 'SIAP'" class="icon big rounded color7 fa fa-cutlery"></i>
+                        <i v-else-if="item.status == 'SIAP'" class="icon big rounded kuning fa fa-cutlery"></i>
                         <i v-else class="icon big rounded color10 fa fa-cutlery"></i>
                         <h3>{{ item.table_name }}</h3>
                         <h4 v-if="item.status == 'SEDANG DIPROSES'">MEJA {{ item.table_id }} | {{ item.status }}</h4>
