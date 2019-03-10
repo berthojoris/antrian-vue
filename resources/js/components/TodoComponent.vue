@@ -9,7 +9,10 @@
                 <div class="card-body">
                     <input id="task" v-model="todo.name" type="text" name="task" value="" autofocus="autofocus" class="form-control" autocomplete="off" v-on:keyup.enter="addTask">
                     <hr>
-                    <table class="table table-bordered table-striped">
+                    <div class="alert alert-info" role="alert" v-show="empty(listTask)">
+                        Sedang tidak ada todo yg akan dikerjakan
+                    </div>
+                    <table class="table table-bordered table-striped" v-show="check(listTask)">
                         <thead>
                             <tr>
                                 <th>Apa saja yang dikerjakan</th>
@@ -17,7 +20,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <comp-todo-item v-for="(item, index) in listTask" v-bind:item="item" v-bind:key="index"></comp-todo-item>
+                            <comp-todo-item 
+                                v-for="(item, index) in listTask" 
+                                :item="item" 
+                                :key="index" 
+                                v-on:toggleTodo="toggleTodo" 
+                                v-on:deleteTodo="deleteTodo">
+                            </comp-todo-item>
                         </tbody>
                     </table>
                 </div>
@@ -60,6 +69,28 @@ export default {
         },
         resetFom() {
             this.todo.name = ''
+        },
+        toggleTodo(todo) {
+            let index = this.listTask.indexOf(todo);
+			this.listTask[index].done = !this.listTask[index].done
+        },
+        deleteTodo(todo) {
+            let index = this.listTask.indexOf(todo);
+			this.listTask.splice(index, 1)
+        },
+        check: function(arr) {
+            if(_.isEmpty(arr)) {
+                return false
+            } else {
+                return true
+            }
+        },
+        empty: function(arr) {
+            if(_.isEmpty(arr)) {
+                return true
+            } else {
+                return false
+            }
         }
     }
 }

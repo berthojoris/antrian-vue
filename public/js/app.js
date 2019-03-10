@@ -2030,6 +2030,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2056,6 +2065,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     resetFom: function resetFom() {
       this.todo.name = '';
+    },
+    toggleTodo: function toggleTodo(todo) {
+      var index = this.listTask.indexOf(todo);
+      this.listTask[index].done = !this.listTask[index].done;
+    },
+    deleteTodo: function deleteTodo(todo) {
+      var index = this.listTask.indexOf(todo);
+      this.listTask.splice(index, 1);
+    },
+    check: function check(arr) {
+      if (_.isEmpty(arr)) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    empty: function empty(arr) {
+      if (_.isEmpty(arr)) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 });
@@ -2082,6 +2113,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['item'],
   computed: {
@@ -2089,6 +2124,14 @@ __webpack_require__.r(__webpack_exports__);
       if (this.item.done) {
         return 'text-decoration:line-through';
       }
+    }
+  },
+  methods: {
+    toggleTodo: function toggleTodo() {
+      this.$emit('toggleTodo', this.item);
+    },
+    deleteTodo: function deleteTodo() {
+      this.$emit('deleteTodo', this.item);
     }
   }
 });
@@ -48061,20 +48104,59 @@ var render = function() {
             _vm._v(" "),
             _c("hr"),
             _vm._v(" "),
-            _c("table", { staticClass: "table table-bordered table-striped" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.listTask, function(item, index) {
-                  return _c("comp-todo-item", {
-                    key: index,
-                    attrs: { item: item }
-                  })
-                }),
-                1
-              )
-            ])
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.empty(_vm.listTask),
+                    expression: "empty(listTask)"
+                  }
+                ],
+                staticClass: "alert alert-info",
+                attrs: { role: "alert" }
+              },
+              [
+                _vm._v(
+                  "\r\n                        Sedang tidak ada todo yg akan dikerjakan\r\n                    "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "table",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.check(_vm.listTask),
+                    expression: "check(listTask)"
+                  }
+                ],
+                staticClass: "table table-bordered table-striped"
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.listTask, function(item, index) {
+                    return _c("comp-todo-item", {
+                      key: index,
+                      attrs: { item: item },
+                      on: {
+                        toggleTodo: _vm.toggleTodo,
+                        deleteTodo: _vm.deleteTodo
+                      }
+                    })
+                  }),
+                  1
+                )
+              ]
+            )
           ])
         ])
       ])
@@ -48119,21 +48201,22 @@ var render = function() {
   return _c("tr", [
     _c("td", { style: _vm.isActive }, [_vm._v(_vm._s(_vm.item.name))]),
     _vm._v(" "),
-    _vm._m(0)
+    _c("td", [
+      _c(
+        "button",
+        { staticClass: "btn btn-success", on: { click: _vm.toggleTodo } },
+        [_vm._v("Done")]
+      ),
+      _vm._v("\r\n           \r\n        "),
+      _c(
+        "button",
+        { staticClass: "btn btn-danger", on: { click: _vm.deleteTodo } },
+        [_vm._v("Delete")]
+      )
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("button", { staticClass: "btn btn-success" }, [_vm._v("Done")]),
-      _vm._v("   "),
-      _c("button", { staticClass: "btn btn-danger" }, [_vm._v("Delete")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
