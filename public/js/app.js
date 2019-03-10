@@ -2044,14 +2044,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      todo: {
-        name: '',
-        done: false
-      }
-    };
-  },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['todos']), {
     newTodo: {
       get: function get() {
@@ -2070,7 +2062,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return true;
       }
     },
-    empty: function empty(arr) {
+    showWhenEmpty: function showWhenEmpty(arr) {
       if (_.isEmpty(arr)) {
         return true;
       } else {
@@ -48167,7 +48159,9 @@ var render = function() {
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
-            _vm._v("\r\n                    Tugas Harian\r\n                ")
+            _vm._v(
+              "\r\n                    Tugas Harian dengan Vuex\r\n                "
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
@@ -48187,7 +48181,7 @@ var render = function() {
                 value: "",
                 autofocus: "autofocus",
                 autocomplete: "off",
-                placeholder: "Masukan todo vuex anda"
+                placeholder: "Masukan todo anda"
               },
               domProps: { value: _vm.newTodo },
               on: {
@@ -48218,8 +48212,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.empty(_vm.todos),
-                    expression: "empty(todos)"
+                    value: _vm.showWhenEmpty(_vm.todos),
+                    expression: "showWhenEmpty(todos)"
                   }
                 ],
                 staticClass: "alert alert-info",
@@ -62014,10 +62008,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       state.todos.splice(index, 1);
     },
     update: function update(state, todo) {
+      todo.done = !todo.done;
       var DateTime = new Date();
 
       if (todo.finishedAt) {
-        todo.done = !todo.done;
         todo.finishedAt = DateTime.toISOString();
       }
     },

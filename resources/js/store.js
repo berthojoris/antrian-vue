@@ -31,9 +31,9 @@ export default new Vuex.Store({
             state.todos.splice(index, 1)
         },
         update (state, todo) {
+            todo.done = !todo.done
             var DateTime = new Date();
             if (todo.finishedAt) {
-                todo.done = !todo.done
                 todo.finishedAt = DateTime.toISOString()
             }
         },

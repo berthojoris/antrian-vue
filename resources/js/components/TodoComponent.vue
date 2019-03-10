@@ -4,12 +4,12 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Tugas Harian
+                    Tugas Harian dengan Vuex
                 </div>
                 <div class="card-body">
-                    <input v-model="newTodo" @keyup.enter="add" type="text" name="task" value="" autofocus="autofocus" class="form-control" autocomplete="off" placeholder="Masukan todo vuex anda">
+                    <input v-model="newTodo" @keyup.enter="add" type="text" name="task" value="" autofocus="autofocus" class="form-control" autocomplete="off" placeholder="Masukan todo anda">
                     <hr>
-                    <div class="alert alert-info" role="alert" v-show="empty(todos)">
+                    <div class="alert alert-info" role="alert" v-show="showWhenEmpty(todos)">
                         Sedang tidak ada todo yg akan dikerjakan
                     </div>
                     <table class="table table-bordered table-striped" v-show="check(todos)">
@@ -42,20 +42,16 @@
 import { mapState, mapMutations } from 'vuex'
 
 export default {
-    data() {
-        return {
-            todo: {
-				name: '',
-				done: false
-			}
-        }
-    },
     computed: {
         ...mapState(['todos']),
 
         newTodo: {
-            get () {return this.$store.state.newTodo},
-            set (value) {return this.$store.commit('newTodo', value)},
+            get () {
+                return this.$store.state.newTodo
+            },
+            set (value) {
+                return this.$store.commit('newTodo', value)
+            },
         },
     },
     methods: {
@@ -68,7 +64,7 @@ export default {
                 return true
             }
         },
-        empty: function(arr) {
+        showWhenEmpty: function(arr) {
             if(_.isEmpty(arr)) {
                 return true
             } else {
